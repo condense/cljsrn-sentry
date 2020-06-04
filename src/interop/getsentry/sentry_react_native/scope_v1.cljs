@@ -6,7 +6,7 @@
 (defn with-scope [cb] (module/withScope cb))
 (defn configure-scope [cb] (module/configureScope cb))
 (defn add-breadcrumb [scope breadcrumb] (.addBreadcrumb scope (clj->js breadcrumb)))
-(defn set-context [scope name context] (.setContext scope name context))
+(defn set-context [scope n context] (.setContext scope n context))
 (defn set-extras [scope extras] (.setExtras scope (clj->js extras)))
 (defn set-tags [scope tags] (.setTags scope (clj->js tags)))
 (defn set-extra [scope k v] (.setExtra scope k (pr-str v)))

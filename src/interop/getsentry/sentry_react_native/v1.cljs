@@ -4,13 +4,13 @@
 (assert module)
 
 ;https://github.com/getsentry/sentry-javascript/blob/master/packages/minimal/src/index.ts
-(defn add-breadcrumb ([breadcrumb] (module/addBreadcrumb (clj->js breadcrumb))))
-(defn set-context ([name context] (module/setContext name context)))
-(defn set-extras ([extras] (module/setExtras (clj->js extras))))
-(defn set-tags ([tags] (module/setTags (clj->js tags))))
-(defn set-extra ([k v] (module/setExtra k (pr-str v))))
-(defn set-tag ([k v] (module/setTag k v)))
-(defn set-user ([m] (module/setUser (clj->js m))))
+(defn add-breadcrumb [breadcrumb] (module/addBreadcrumb (clj->js breadcrumb)))
+(defn set-context [name context] (module/setContext name context))
+(defn set-extras [extras] (module/setExtras (clj->js extras)))
+(defn set-tags [tags] (module/setTags (clj->js tags)))
+(defn set-extra [k v] (module/setExtra k (pr-str v)))
+(defn set-tag [k v] (module/setTag k v))
+(defn set-user [m] (module/setUser (clj->js m)))
 
 (defn capture-exception [err]
   (let [data (ex-data err)]
