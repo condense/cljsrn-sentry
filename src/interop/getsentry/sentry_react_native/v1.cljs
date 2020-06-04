@@ -5,35 +5,20 @@
 (assert module)
 
 ;https://github.com/getsentry/sentry-javascript/blob/master/packages/minimal/src/index.ts
-(defn with-scope [cb] (module/withScope cb))
-(defn configure-scope [cb] (module/configureScope cb))
-(defn add-breadcrumb
-  ([breadcrumb] (module/addBreadcrumb (clj->js breadcrumb)))
-  ([scope breadcrumb] (.addBreadcrumb scope (clj->js breadcrumb))))
-(defn set-context
-  ([name context] (module/setContext name context))
-  ([scope name context] (.setContext scope name context)))
-(defn set-extras
-  ([extras] (module/setExtras (clj->js extras)))
-  ([scope extras] (.setExtras scope (clj->js extras))))
-(defn set-tags
-  ([tags] (module/setTags (clj->js tags)))
-  ([scope tags] (.setTags scope (clj->js tags))))
-(defn set-extra
-  ([k v] (module/setExtra k (pr-str v)))
-  ([scope k v] (.setExtra scope k (pr-str v))))
-(defn set-tag
-  ([k v] (module/setTag k v))
-  ([scope k v] (.setTag scope k v)))
-(defn set-user
-  ([m] (module/setUser (clj->js m)))
-  ([scope m] (.setUser scope (clj->js m))))
+(defn add-breadcrumb ([breadcrumb] (module/addBreadcrumb (clj->js breadcrumb))))
+(defn set-context ([name context] (module/setContext name context)))
+(defn set-extras ([extras] (module/setExtras (clj->js extras))))
+(defn set-tags ([tags] (module/setTags (clj->js tags))))
+(defn set-extra ([k v] (module/setExtra k (pr-str v))))
+(defn set-tag ([k v] (module/setTag k v)))
+(defn set-user ([m] (module/setUser (clj->js m))))
 
 (defn capture-exception [err]
-  (with-scope
-    (fn [scope]
-      (some->> (ex-data err) pr-str (set-extra scope "ex-data"))
-      (module/captureException err))))
+  (let [data (ex-data err)]
+    (module/withScope
+      (fn [scope]
+        (when-data (.setExtra scope "ex-data" (pr-str data)))
+        (module/captureException err)))))
 
 (defn capture-message
   ([message] (module/captureMessage message))
