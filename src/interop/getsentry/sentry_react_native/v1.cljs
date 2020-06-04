@@ -16,7 +16,7 @@
   (let [data (ex-data err)]
     (module/withScope
       (fn [scope]
-        (when-data (.setExtra scope "ex-data" (pr-str data)))
+        (when data (.setExtra scope "ex-data" (pr-str data)))
         (module/captureException err)))))
 
 (defn capture-message
