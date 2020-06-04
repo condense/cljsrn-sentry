@@ -1,6 +1,5 @@
 (ns interop.getsentry.sentry-react-native.v1
-  (:require ["@sentry/react-native" :as module]
-            [goog.object :as gobject]))
+  (:require ["@sentry/react-native" :as module]))
 
 (assert module)
 
